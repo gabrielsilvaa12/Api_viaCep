@@ -1,17 +1,18 @@
 import 'package:api_consumo/Pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class ViaCepApi extends StatelessWidget {
+  const ViaCepApi({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'ACO ACO ACO ACO',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFA7C957)),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const HomePage(title: 'App de mapa de lugares do mundo'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
