@@ -45,6 +45,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void setControllersCep(Endereco endereco) {
+    cepController.text = endereco.cep!;
     logradouroController.text = endereco.logradouro!;
     complementoController.text = endereco.complemento!;
     bairroController.text = endereco.bairro!;
@@ -68,7 +69,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               TextField(
                 controller: cepController,
-                maxLength: 8,
+                maxLength: 9,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
