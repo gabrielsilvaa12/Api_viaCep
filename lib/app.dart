@@ -11,7 +11,7 @@ class ViaCepApi extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFA7C957)),
       ),
-      home: const HomePage(title: 'App de mapa de lugares do mundo'),
+      home: const HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
