@@ -18,30 +18,44 @@ class _HomePageState extends State<HomePage> {
   TextEditingController cidadeController = TextEditingController();
   TextEditingController estadoController = TextEditingController();
   Endereco? endereco;
+  bool isLoading = false;
 
   ViaCepService viaCepService = ViaCepService();
 
   Future<void> buscarCep(String cep) async {
-    Endereco? response = await viaCepService.buscarEndereco(cep);
-    if (response == null) {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            icon: Icon(Icons.warning, color: Colors.red),
-            title: Text('ATENÇÃO'),
-            content: Text('CEP não encontrado!'),
-          );
-        },
-      );
-      return;
-    }
-
+    clearControllers();
     setState(() {
-      endereco = response;
+      isLoading = true;
     });
+    try {
+      Endereco? response = await viaCepService.buscarEndereco(cep);
+      if (response == null) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              icon: Icon(Icons.warning, color: Colors.red),
+              title: Text('ATENÇÃO'),
+              content: Text('CEP não encontrado!'),
+            );
+          },
+        );
+        cepController.clear();
+        return;
+      }
 
-    setControllersCep(endereco!);
+      setState(() {
+        endereco = response;
+      });
+
+      setControllersCep(endereco!);
+    } catch (erro) {
+      throw Exception("Erro ao buscar cep: $erro");
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
   void setControllersCep(Endereco endereco) {
@@ -51,6 +65,14 @@ class _HomePageState extends State<HomePage> {
     bairroController.text = endereco.bairro!;
     cidadeController.text = endereco.localidade!;
     estadoController.text = endereco.estado!;
+  }
+
+  void clearControllers() {
+    bairroController.clear();
+    logradouroController.clear();
+    complementoController.clear();
+    cidadeController.clear();
+    estadoController.clear();
   }
 
   @override
@@ -68,56 +90,76 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextField(
+                onChanged: (value) {
+                  if (value.isEmpty) {
+                    setState(() {
+                      endereco = null;
+                    });
+                    clearControllers();
+                  }
+                },
                 controller: cepController,
                 maxLength: 9,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    onPressed: () {
-                      buscarCep(cepController.text);
-                    },
-                    icon: Icon(Icons.search),
-                  ),
+                  suffixIcon: isLoading
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CircularProgressIndicator(),
+                        )
+                      : IconButton(
+                          onPressed: () {
+                            buscarCep(cepController.text);
+                          },
+                          icon: Icon(Icons.search),
+                        ),
                   border: OutlineInputBorder(),
                   labelText: "CEP",
                 ),
               ),
-              TextField(
-                controller: logradouroController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Logradouro",
+              if (endereco?.bairro != null)
+                Column(
+                  spacing: 20,
+                  children: [
+                    TextField(
+                      controller: logradouroController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Logradouro",
+                      ),
+                    ),
+                    // if (complementoController.text.isNotEmpty)
+                    TextField(
+                      controller: complementoController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Complemento",
+                      ),
+                    ),
+                    TextField(
+                      controller: bairroController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Bairro",
+                      ),
+                    ),
+                    TextField(
+                      controller: cidadeController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Cidade",
+                      ),
+                    ),
+                    TextField(
+                      controller: estadoController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Estado",
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              TextField(
-                controller: complementoController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Complemento",
-                ),
-              ),
-              TextField(
-                controller: bairroController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Bairro",
-                ),
-              ),
-              TextField(
-                controller: cidadeController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Cidade",
-                ),
-              ),
-              TextField(
-                controller: estadoController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Estado",
-                ),
-              ),
             ],
           ),
         ),
