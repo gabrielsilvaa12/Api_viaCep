@@ -89,6 +89,7 @@ class _HomePageState extends State<HomePage> {
             spacing: 20,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset('assets/images/garden.png', height: 150),
               TextField(
                 onChanged: (value) {
                   if (value.isEmpty) {
