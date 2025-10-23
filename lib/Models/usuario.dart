@@ -19,20 +19,22 @@ class Usuario {
     return {
       'nome': nome,
       'email': email,
-      'Telefone': telefone,
+      'telefone': telefone,
       'cpf': cpf,
       'senha': senha,
     };
   }
 
+  // Em lib/Models/usuario.dart
+
   factory Usuario.fromMap(String idUser, Map<String, dynamic> map) {
     return Usuario(
       id: idUser,
-      nome: map['nome'],
-      email: map['email'],
-      telefone: map['telefone'],
-      cpf: map['cpf'],
-      senha: map['senha'],
+      nome: map['nome'] as String? ?? '',
+      email: map['email'] as String? ?? '',
+      telefone: map['Telefone'] as String? ?? '',
+      cpf: map['cpf'] as String? ?? '',
+      senha: map['senha'] as String? ?? '',
     );
   }
 }
