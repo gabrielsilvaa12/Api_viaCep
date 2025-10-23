@@ -1,3 +1,5 @@
+import 'package:api_consumo/Models/usuario.dart';
+import 'package:api_consumo/Services/firebase_service.dart';
 import 'package:flutter/material.dart';
 
 class FormCadastroUsuarioPage extends StatefulWidget {
@@ -17,6 +19,52 @@ class _FormCadastroUsuarioPageState extends State<FormCadastroUsuarioPage> {
   TextEditingController confirmarSenhaController = TextEditingController();
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  final FirebaseService firebaseService = FirebaseService(
+    colectionName: 'usuarios',
+  );
+
+  Future<void> salvarUsuario() async {
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
+
+    Usuario usuario = Usuario(
+      id: "",
+      nome: nomeController.text,
+      email: emailController.text,
+      telefone: telefoneController.text,
+      cpf: cpfController.text,
+      senha: senhaController.text,
+    );
+
+    try {
+      String idUser = await firebaseService.create(usuario.toMap());
+
+      if (idUser.isNotEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.green,
+            content: Column(
+              children: [
+                Text(
+                  "sucesso: $idUser",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  "Usuário cadastrado com sucesso!",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+    } catch (erro) {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -119,10 +167,7 @@ class _FormCadastroUsuarioPageState extends State<FormCadastroUsuarioPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        if (!formKey.currentState!.validate()) {
-                          return;
-                        }
-                        print("formulario válido");
+                        salvarUsuario();
                       },
                       child: Text('Cadastrar'),
                     ),

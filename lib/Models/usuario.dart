@@ -19,7 +19,7 @@ class Usuario {
     return {
       'nome': nome,
       'email': email,
-      'teelfone': telefone,
+      'Telefone': telefone,
       'cpf': cpf,
       'senha': senha,
     };
