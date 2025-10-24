@@ -1,5 +1,4 @@
 import 'package:api_consumo/Pages/form_cadastro_usuario_page.dart';
-// import 'package:api_consumo/Pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 class ViaCepApi extends StatelessWidget {

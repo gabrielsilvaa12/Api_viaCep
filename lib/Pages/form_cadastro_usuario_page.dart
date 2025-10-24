@@ -1,4 +1,5 @@
 import 'package:api_consumo/Models/usuario.dart';
+import 'package:api_consumo/Pages/usuarios_page.dart';
 import 'package:api_consumo/Services/firebase_service.dart';
 import 'package:flutter/material.dart';
 
@@ -168,6 +169,12 @@ class _FormCadastroUsuarioPageState extends State<FormCadastroUsuarioPage> {
                     ElevatedButton(
                       onPressed: () {
                         salvarUsuario();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const UsuariosPage(),
+                          ),
+                        );
                       },
                       child: Text('Cadastrar'),
                     ),

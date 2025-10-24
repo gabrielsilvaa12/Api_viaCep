@@ -29,7 +29,7 @@ class UsuarioCard extends StatelessWidget {
           size: 16,
           color: Colors.grey,
         ),
-        onTap: onTap, // Usa a função passada como parâmetro
+        onTap: onTap,
       ),
     );
   }
