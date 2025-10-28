@@ -35,19 +35,19 @@ class _MapaPageState extends State<MapaPage> {
       ),
     ),
     Marker(
-      markerId: MarkerId('masp'),
-      position: LatLng(-23.5618, -46.6560),
+      markerId: MarkerId('estadio_morumbi'),
+      position: LatLng(-23.5980, -46.7208),
       infoWindow: InfoWindow(
-        title: 'MASP',
-        snippet: 'Museu de Arte de São Paulo',
+        title: 'Estádio do Morumbi',
+        snippet: 'Casa do Maior time do País',
       ),
     ),
     Marker(
-      markerId: MarkerId('mercado_municipal'),
-      position: LatLng(-23.5416, -46.6302),
+      markerId: MarkerId('escola_emygdio'),
+      position: LatLng(-23.5288, -46.6949),
       infoWindow: InfoWindow(
-        title: 'Mercado Municipal',
-        snippet: 'Famoso sanduíche de mortadela',
+        title: 'EE Emygdio de Barros',
+        snippet: 'Escola Estadual em São Paulo',
       ),
     ),
     Marker(
@@ -55,7 +55,7 @@ class _MapaPageState extends State<MapaPage> {
       position: LatLng(-23.5563, -46.6866),
       infoWindow: InfoWindow(
         title: 'Beco do Batman',
-        snippet: 'Galeria de grafite a céu aberto',
+        snippet: 'Deveria ser em Gotham',
       ),
     ),
   };
