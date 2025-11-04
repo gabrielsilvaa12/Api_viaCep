@@ -1,5 +1,6 @@
 // import 'package:api_consumo/Pages/form_cadastro_usuario_page.dart';
 // import 'package:api_consumo/Pages/location_page.dart';
+import 'package:api_consumo/Pages/connectivity_page.dart';
 import 'package:api_consumo/Pages/mapa_page.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class ViaCepApi extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFA7C957)),
       ),
-      home: const MapaPage(),
+      home: const ConnectivityPage(),
       debugShowCheckedModeBanner: false,
     );
   }
