@@ -8,17 +8,19 @@ class SharedPreferencesService {
 
   SharedPreferencesService._();
 
-  Future<SharedPreferencesService> init() async {
+  static Future<void> init() async {
+    // 1. Adicione "static"
     if (_instance != null) {
-      return _instance!;
+      return; // 2. Mude esta linha para "return;"
     }
 
     _instance = SharedPreferencesService._();
 
     _preferences = await SharedPreferences.getInstance();
 
-    return _instance!;
+    return; // 3. Mude esta linha para "return;"
   }
+  // ...
 
   Future<bool> saveInt(String key, int value) async {
     try {
