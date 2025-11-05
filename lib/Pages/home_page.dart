@@ -1,4 +1,5 @@
 import 'package:api_consumo/Models/endereco.dart';
+import 'package:api_consumo/Services/connectivity_service.dart';
 import 'package:api_consumo/Services/via_cep_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final ConnectivityService _connectivityService = ConnectivityService();
   TextEditingController cepController = TextEditingController();
   TextEditingController logradouroController = TextEditingController();
   TextEditingController complementoController = TextEditingController();
@@ -23,6 +25,32 @@ class _HomePageState extends State<HomePage> {
   ViaCepService viaCepService = ViaCepService();
 
   Future<void> buscarCep(String cep) async {
+    bool isOnline = await _connectivityService.checkconnectivity();
+
+    if (!isOnline) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            icon: Icon(Icons.wifi_off, color: Colors.red),
+            title: Text('SEM CONEXÃO'),
+            content: Text(
+              'Parece que você está offline. Por favor, verifique sua conexão com a internet.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+      return; // Interrompe a execução se estiver offline
+    }
+
     clearControllers();
     setState(() {
       isLoading = true;

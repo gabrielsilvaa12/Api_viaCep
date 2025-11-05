@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Endereco {
   String? cep;
   String? logradouro;
@@ -17,6 +19,18 @@ class Endereco {
     this.estado,
   });
 
+  Map<String, dynamic> toMap() {
+    return {
+      'cep': cep,
+      'logradouro': logradouro,
+      'complemento': complemento,
+      'bairro': bairro,
+      'localidade': localidade,
+      'uf': uf,
+      'estado': estado,
+    };
+  }
+
   factory Endereco.fromJson(Map<String, dynamic> json) {
     return Endereco(
       cep: json['cep'],
@@ -28,4 +42,9 @@ class Endereco {
       estado: json['estado'],
     );
   }
+
+  String toJson() => json.encode(toMap());
+
+  factory Endereco.fromJsonString(String source) =>
+      Endereco.fromJson(json.decode(source));
 }
