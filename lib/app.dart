@@ -10,7 +10,7 @@ class ViaCepApi extends StatelessWidget {
     return MaterialApp(
       title: 'Consulta de CEP',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFA7C957)),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
       // 3. Defina a tela da atividade como a 'home'
       home: const ConsultaCepPage(),
